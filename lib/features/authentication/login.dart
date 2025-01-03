@@ -92,7 +92,6 @@ class _LoginState extends State<Login> {
                 text: "Log In",
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -124,7 +123,7 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        height: 60,width: 60,
+                        height: 80,width: 80,
                         child: Image.asset("assets/icons/facebook.png")),
                     const SizedBox(
                       width: 20,

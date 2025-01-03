@@ -16,11 +16,48 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+  List<ItemModel> allItems = [...burger, ...pizza, ...meals];
+  List<ItemModel> displayedItems = [...burger, ...pizza, ...meals];
+
+  void updateCategory(int index) {
+    setState(() {
+      _selectedIndex = index;
+      switch (_selectedIndex) {
+        case 0:
+          allItems = [...burger, ...pizza, ...meals];
+          break;
+        case 1:
+          allItems = burger;
+          break;
+        case 2:
+          allItems = meals;
+          break;
+        case 3:
+          allItems = pizza;
+          break;
+        default:
+          allItems = [];
+      }
+      displayedItems = allItems;
+    });
+  }
+
+  void _handleSearch(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        displayedItems = allItems;
+      } else {
+        displayedItems = allItems.where((item) {
+          return item.title.toLowerCase().contains(query.toLowerCase()) ||
+              item.description.toLowerCase().contains(query.toLowerCase());
+        }).toList();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    int _selectedIndex = 0;
-    List<ItemModel> displayedItems = items; // Assuming 'items' is defined elsewhere
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -67,11 +104,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: SearchWidget(),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SearchWidget(
+                    onSearch: _handleSearch,
+                  ),
                 ),
-                CategoryBar(selectedIndex: _selectedIndex),
+                CategoryBar(
+                  selectedIndex: _selectedIndex,
+                  onCategorySelected: updateCategory,
+                ),
                 GridView.count(
                   shrinkWrap: true,
                   childAspectRatio: 1 / 1.6,

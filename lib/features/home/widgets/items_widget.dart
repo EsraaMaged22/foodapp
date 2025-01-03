@@ -4,13 +4,20 @@ import '../../../core/costants/fonts.dart';
 import '../../../core/itemmodel.dart';
 import 'itemdetails.dart';
 
-class ItemsView extends StatelessWidget {
-   final ItemModel item;
+class ItemsView extends StatefulWidget {
+  final ItemModel item;
 
-   const ItemsView({
+  const ItemsView({
     super.key,
     required this.item,
   });
+
+  @override
+  State<ItemsView> createState() => _ItemsViewState();
+}
+
+class _ItemsViewState extends State<ItemsView> {
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +28,25 @@ class ItemsView extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ItemDetailsView(
-              item: item
+              item: widget.item,
             ),
           ),
         );
       },
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.black26,
+        decoration:   BoxDecoration(   border: Border.all(
+          color: Colors.grey.withOpacity(0.2),
+          width: 1,
+        )
+          ,boxShadow: const [
+          BoxShadow(
+            color: Colors.white,
+            blurRadius: 2,
+
           ),
+
+        ],
+
           borderRadius: BorderRadius.circular(20),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -38,13 +54,13 @@ class ItemsView extends StatelessWidget {
           children: [
             Image(
               height: screenSize.height * .15,
-              image: AssetImage(item.image), // Use AssetImage
+              image: AssetImage(widget.item.image),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Text(
-              item.title,
+              widget.item.title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: AppFonts.textStyle16black,
@@ -55,15 +71,15 @@ class ItemsView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 IconButton(
-                      onPressed: () async {
-
-                      },
-                     icon: Icon(Icons.favorite_border),
-                      color:Colors.grey,
-                    )
-
-
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isFavorite = !isFavorite;
+                    });
+                  },
+                  icon: Icon(Icons.favorite),
+                  color: isFavorite ? Colors.red : Colors.grey,
+                ),
               ],
             ),
           ],
@@ -72,4 +88,3 @@ class ItemsView extends StatelessWidget {
     );
   }
 }
-

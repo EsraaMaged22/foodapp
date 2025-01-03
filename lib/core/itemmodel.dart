@@ -10,7 +10,7 @@ class ItemModel {
     required this.price, required this.image, this.rate});
 }
 
-final List<ItemModel> items = [
+final List<ItemModel> burger = [
   ItemModel(
     id: 1,
     title: "Cheeseburger Wendy's Burger",
@@ -28,6 +28,10 @@ final List<ItemModel> items = [
     rate: 3.8,
   ),
 
+
+];
+final List <ItemModel> pizza =[
+
   ItemModel(
     id: 3,
     title: "Margherita Pizza",
@@ -44,10 +48,12 @@ final List<ItemModel> items = [
     image: "assets/images/pizza2.png",
     rate: 4.6,
   ),
-  // New Meal Items
+];
+
+final List <ItemModel> meals =[
   ItemModel(
     id: 5,
-    title: "Grilled Chicken Meal",
+    title: "Chicken Meal",
     description: "A healthy Grilled Chicken Meal served with steamed vegetables, mashed potatoes, and a side of tangy BBQ sauce.",
     price: 34.99,
     image: "assets/images/chicken.png",
@@ -62,3 +68,4 @@ final List<ItemModel> items = [
     rate: 4.8,
   ),
 ];
+
